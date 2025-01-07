@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: CLOUD-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: STUDENT-SERVICE
+          uri: lb://STUDENT-SERVICE
+          predicates:
+            - Path=/student/**
+        - id: SCHOOL-SERVICE
+          uri: lb://SCHOOL-SERVICE
+          predicates:
+            - Path=/school/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+    
+logging:
+  level:
+      com.netflix.eureka: DEBUG
+      org.springframework.cloud.netflix.eureka: DEBUG
